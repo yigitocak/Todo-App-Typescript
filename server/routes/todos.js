@@ -14,12 +14,15 @@ router.get("/", (req, res) => {
 router.post("/", (req, res) => {
   try {
     const requestBody = req.body;
-    if (!requestBody) {
+    if (!requestBody.todo) {
       return res.status(400).json({
         message: "No body provided!",
       });
     }
-  } catch (e) {}
+    res.status(200).json(requestBody);
+  } catch (e) {
+    res.status(500).json({ message: "Failed to upload todo" });
+  }
 });
 
 export default router;
