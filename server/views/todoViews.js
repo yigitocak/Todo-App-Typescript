@@ -2,9 +2,9 @@ import knex from "knex";
 import knexfile from "../knexfile.js";
 const db = knex(knexfile.development);
 
-export const getTodos = async (req, res) => {
+export const getTodosView = async (req, res) => {
   try {
-    const { email } = req.body;
+    const { email } = req.params;
     if (!email) {
       return res
         .status(400)
@@ -25,9 +25,10 @@ export const getTodos = async (req, res) => {
   }
 };
 
-export const postTodo = async (req, res) => {
+export const createTodoView = async (req, res) => {
   try {
-    const { email, todo } = req.body;
+    const { email } = req.params;
+    const { todo } = req.body;
 
     if (!email || !todo) {
       return res.status(400).json({
@@ -39,11 +40,16 @@ export const postTodo = async (req, res) => {
     const user = await db("users").where({ email }).first();
 
     if (!user) {
-      res.status(404).json({ message: "User not found", success: false });
+      return res
+        .status(404)
+        .json({ message: "User not found", success: false });
     }
 
     const currentTodos = user.todos || [];
-    const updatedTodos = [...currentTodos, todo];
+    const updatedTodos = [
+      ...currentTodos,
+      { todo, id: crypto.randomUUID(), completed: false },
+    ];
 
     await db("users")
       .where({ email })
@@ -54,5 +60,74 @@ export const postTodo = async (req, res) => {
     return res
       .status(500)
       .json({ message: "Failed to upload todo", success: false });
+  }
+};
+
+export const deleteTodoView = async (req, res) => {
+  try {
+    const { email, todoId } = req.params;
+    const user = await db("users").where({ email }).first();
+
+    if (!user)
+      return res
+        .status(404)
+        .json({ message: "User not found", success: false });
+
+    const currentTodos = user.todos || [];
+    const updatedTodos = currentTodos.filter((todo) => todo.id !== todoId);
+
+    if (updatedTodos.length === currentTodos.length) {
+      return res
+        .status(404)
+        .json({ message: "Todo not found", success: false });
+    }
+
+    await db("users")
+      .where({ email })
+      .update({ todos: JSON.stringify(updatedTodos) });
+
+    return res
+      .status(200)
+      .json({ message: "Todo deleted successfully", success: true });
+  } catch (e) {
+    return res
+      .status(500)
+      .json({ message: "Internal Server Error", success: false });
+  }
+};
+
+export const completeTodoView = async (req, res) => {
+  try {
+    const { email, todoId } = req.params;
+
+    const user = await db("users").where({ email }).first();
+
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: "User not found", success: false });
+    }
+
+    const currentTodos = user.todos || [];
+    const selectedTodo = currentTodos.filter((todo) => todo.id === todoId);
+    const cleanedTodos = currentTodos.filter((todo) => todo.id !== todoId);
+    selectedTodo[0].completed = !selectedTodo[0].completed;
+    const updatedTodos = [...cleanedTodos, selectedTodo[0]];
+
+    if (!selectedTodo) {
+      return res
+        .status(404)
+        .json({ message: "Todo not found", success: false });
+    }
+
+    await db("users")
+      .where({ email })
+      .update({ todos: JSON.stringify(updatedTodos) });
+
+    return res.status(200).json({ message: "Todo completed", success: true });
+  } catch (e) {
+    return res
+      .status(500)
+      .json({ message: "Internal Server Error", success: false });
   }
 };
