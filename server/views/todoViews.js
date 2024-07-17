@@ -109,10 +109,8 @@ export const completeTodoView = async (req, res) => {
     }
 
     const currentTodos = user.todos || [];
-    const selectedTodo = currentTodos.filter((todo) => todo.id === todoId);
-    const cleanedTodos = currentTodos.filter((todo) => todo.id !== todoId);
-    selectedTodo[0].completed = !selectedTodo[0].completed;
-    const updatedTodos = [...cleanedTodos, selectedTodo[0]];
+    const selectedTodo = currentTodos.find((todo) => todo.id === todoId);
+    selectedTodo.completed = !selectedTodo.completed;
 
     if (!selectedTodo) {
       return res
@@ -122,7 +120,7 @@ export const completeTodoView = async (req, res) => {
 
     await db("users")
       .where({ email })
-      .update({ todos: JSON.stringify(updatedTodos) });
+      .update({ todos: JSON.stringify(currentTodos) });
 
     return res.status(200).json({ message: "Todo completed", success: true });
   } catch (e) {
