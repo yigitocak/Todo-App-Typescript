@@ -1,13 +1,21 @@
 import { Button } from "./Button.tsx";
 import { useState } from "react";
+import { BASE_URL } from "../utils/utils.ts";
+import axios from "axios";
 
 export const AddTodo = () => {
   const [todoInput, setTodoInput] = useState<string>("");
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    localStorage.setItem("todos", todoInput);
+    try {
+      const response = await axios.post(`${BASE_URL}todo`, {
+        todo: todoInput,
+        completed: false,
+      });
+      console.log(response);
+    } catch (e) {}
   };
 
   return (
