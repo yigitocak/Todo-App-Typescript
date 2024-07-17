@@ -5,13 +5,15 @@
   "type": "module",
   "scripts": {
     "start": "nodemon index.js",
-    "migrate": "knex migrate:latest"
+    "migrate": "knex migrate:latest",
+    "migrate:down": "knex migrate:down"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
