@@ -28,7 +28,7 @@ export const loginUserView = async (req, res) => {
       const match = await bcrypt.compare(password, user.password);
       if (!match) {
         return res.status(401).json({
-          message: "Incorrect Password",
+          message: "Invalid Login",
           success: false,
         });
       }
@@ -46,11 +46,16 @@ export const loginUserView = async (req, res) => {
       { expiresIn },
     );
 
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+    });
+
     return res.status(200).json({
       success: true,
       token,
       message: rememberMe ? "Logged in for 7d" : "Logged in for 12h",
-      email,
+      email: user.email,
     });
   } catch (e) {
     return res.status(500).json({
@@ -58,4 +63,11 @@ export const loginUserView = async (req, res) => {
       success: false,
     });
   }
+};
+
+export const decodeView = (req, res) => {
+  return res.status(200).json({
+    decoded: req.user.email,
+    success: true,
+  });
 };
