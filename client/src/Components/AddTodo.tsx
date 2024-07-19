@@ -1,20 +1,33 @@
-import { Button } from "./Button.tsx";
-import { useState } from "react";
-import { BASE_URL } from "../utils/utils.ts";
+import { Button } from "./Button";
+import React, { useState } from "react";
+import { BASE_URL } from "../utils/utils";
 import axios from "axios";
+import { useAppContext } from "../contexts/AppContextProvider";
+import Cookies from "js-cookie";
 
 export const AddTodo = () => {
   const [todoInput, setTodoInput] = useState<string>("");
+  const { userEmail, getTodos } = useAppContext();
+  const token = Cookies.get("authToken");
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (todoInput === "" || todoInput.trim() === "") return;
+
     try {
-      const response = await axios.post(`${BASE_URL}todo`, {
-        todo: todoInput,
-        completed: false,
-      });
-      console.log(response);
+      await axios.post(
+        `${BASE_URL}todo/${userEmail}/add`,
+        {
+          todo: todoInput,
+          completed: false,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
+      getTodos();
+      setTodoInput("");
     } catch (e) {}
   };
 
@@ -33,7 +46,12 @@ export const AddTodo = () => {
         }}
         className="w-full m-2 max-sm:p-1 p-2 rounded border"
       />
-      <Button primary="primary" text="Add to list" />
+      <Button
+        color="bg-[#345a80]"
+        hover="hover:bg-[#274461]"
+        text="Add to list"
+        onClick={() => {}}
+      />
     </form>
   );
 };
