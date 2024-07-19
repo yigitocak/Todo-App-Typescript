@@ -48,7 +48,12 @@ export const createTodoView = async (req, res) => {
     const currentTodos = user.todos || [];
     const updatedTodos = [
       ...currentTodos,
-      { todo, id: crypto.randomUUID(), completed: false },
+      {
+        todo,
+        id: crypto.randomUUID(),
+        completed: false,
+        timestamp: Date.now(),
+      },
     ];
 
     await db("users")

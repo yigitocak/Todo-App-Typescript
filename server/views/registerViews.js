@@ -32,7 +32,6 @@ export const registerUser = async (req, res) => {
     });
     return res.status(200).json({ message: "Account created", success: true });
   } catch (e) {
-    console.error(e);
     return res
       .status(500)
       .json({ message: "Failed to create an account!", success: false });
