@@ -3,6 +3,7 @@ import cors from "cors";
 import morgan from "morgan";
 import todo from "./routes/todo.js";
 import register from "./routes/register.js";
+import login from "./routes/login.js";
 import "dotenv/config";
 const app = express();
 const PORT = process.env.PORT;
@@ -13,6 +14,7 @@ app.use(express.static("public"));
 
 app.use("/todo", todo);
 app.use("/register", register);
+app.use("/login", login);
 
 app.listen(PORT || 5050, () => {
   console.log(`${PORT} is the port`);

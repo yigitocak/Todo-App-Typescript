@@ -1,12 +1,15 @@
 type ButtonProps = {
-  primary: string;
+  color: string;
+  hover: string;
   text: string;
+  onClick: () => void;
 };
 
-export const Button = ({ primary, text }: ButtonProps) => {
+export const Button = ({ color, hover, text, onClick }: ButtonProps) => {
   return (
     <button
-      className={`text-white rounded max-sm:p-1 p-2 w-full transition-all ${primary ? "bg-[#345a80] hover:bg-[#274461]" : "bg-[#4f7ca8] hover:bg-[#375775]"}`}
+      className={`text-white rounded max-sm:p-1 p-2 w-full transition-all ${color} ${hover}`}
+      onClick={onClick}
     >
       {text}
     </button>
