@@ -4,10 +4,9 @@ import bcrypt from "bcrypt";
 const db = knex(knexfile.development);
 
 export const registerUser = async (req, res) => {
+  const { email, password, name } = req.body;
   try {
-    const { email, password } = req.body;
-
-    if (!email || !password) {
+    if (!email || !password || !name) {
       return res.status(400).json({
         message: "Bad request body",
         success: false,
@@ -28,6 +27,7 @@ export const registerUser = async (req, res) => {
 
     await db("users").insert({
       email,
+      name,
       password: hashedPassword,
     });
     return res.status(200).json({ message: "Account created", success: true });
