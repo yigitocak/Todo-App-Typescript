@@ -24,14 +24,12 @@ export const loginUserView = async (req, res) => {
       });
     }
 
-    if (password && user.password) {
-      const match = await bcrypt.compare(password, user.password);
-      if (!match) {
-        return res.status(401).json({
-          message: "Invalid Login",
-          success: false,
-        });
-      }
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) {
+      return res.status(401).json({
+        message: "Invalid Login",
+        success: false,
+      });
     }
 
     const SECRET_KEY = process.env.SECRET_KEY;
