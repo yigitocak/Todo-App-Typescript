@@ -13,6 +13,14 @@ export const registerUser = async (req, res) => {
       });
     }
 
+    if (password.length < 8)
+      return res
+        .status(400)
+        .json({
+          message: "Password can't be less than 8 characters",
+          success: false,
+        });
+
     const existingUser = await db("users").where({ email }).first();
     if (existingUser) {
       return res.status(409).json({
