@@ -102,6 +102,7 @@ export const Login = () => {
       await axios.post(`${BASE_URL}register`, {
         email,
         password,
+        name,
       });
       setConfirmPassword("");
       setPassword("");
@@ -111,6 +112,7 @@ export const Login = () => {
 
       setSnackbarMessage("Registration successful!");
       setSnackbarOpen(true);
+      setRegister(false);
     } catch (error: any) {
       if (error.response.status === 409) {
         setSnackbarMessage("Email already exists!");

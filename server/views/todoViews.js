@@ -28,9 +28,9 @@ export const getTodosView = async (req, res) => {
 export const createTodoView = async (req, res) => {
   try {
     const { email } = req.params;
-    const { todo } = req.body;
+    const { todo, id, timestamp } = req.body;
 
-    if (!email || !todo) {
+    if (!email || !todo || !id || !timestamp) {
       return res.status(400).json({
         message: "Bad request body",
         success: false,
@@ -50,9 +50,9 @@ export const createTodoView = async (req, res) => {
       ...currentTodos,
       {
         todo,
-        id: crypto.randomUUID(),
+        id,
         completed: false,
-        timestamp: Date.now(),
+        timestamp,
       },
     ];
 

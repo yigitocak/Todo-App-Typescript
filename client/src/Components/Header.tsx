@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAppContext } from "../contexts/AppContextProvider";
 
 export const Header = () => {
-  const { todoCount, todoList } = useAppContext();
+  const { todoCount, todoList, loggedIn } = useAppContext();
   const [completedTodo, setCompletedTodo] = useState<number>(0);
 
   useEffect(() => {
@@ -21,10 +21,14 @@ export const Header = () => {
         <div className="w-3 h-3 bg-[#7c868f] rounded-full"></div>
         <div className="w-3 h-3 bg-[#7c868f] rounded-full"></div>
       </div>
-      <p className="ml-auto px-6">
-        <span className="font-bold">{completedTodo}</span>/{todoCount}
-        <span className="max-sm:hidden"> todos completed</span>
-      </p>
+      {loggedIn ? (
+        <p className="ml-auto px-6">
+          <span className="font-bold">{completedTodo}</span>/{todoCount}
+          <span className="max-sm:hidden"> todos completed</span>
+        </p>
+      ) : (
+        <></>
+      )}
     </header>
   );
 };
