@@ -1,10 +1,10 @@
-import { BackgroundHeading } from "./Components/BackgroundHeading";
-import { Footer } from "./Components/Footer";
-import { TodoList } from "./Components/TodoList";
-import { Header } from "./Components/Header";
-import { Sidebar } from "./Components/Sidebar";
+import { BackgroundHeading } from "./Components/BackgroundHeading/BackgroundHeading.tsx";
+import { Footer } from "./Components/Footer/Footer.tsx";
+import { TodoList } from "./Components/TodoList/TodoList.tsx";
+import { Header } from "./Components/Header/Header.tsx";
+import { Sidebar } from "./Components/Sidebar/Sidebar.tsx";
 import { useEffect } from "react";
-import { Snackbar } from "./Components/Snackbar";
+import { Snackbar } from "./Components/Snackbar/Snackbar.tsx";
 import { useAppContext } from "./contexts/AppContextProvider";
 import axios from "axios";
 import { AUTH_ENDPOINT, BASE_URL } from "./utils/utils.ts";

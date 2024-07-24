@@ -1,10 +1,10 @@
-import { Button } from "./Button";
+import { Button } from "../Button/Button.tsx";
 import React, { useState } from "react";
-import { BASE_URL } from "../utils/utils";
+import { BASE_URL } from "../../utils/utils.ts";
 import axios from "axios";
-import { useAppContext } from "../contexts/AppContextProvider";
+import { useAppContext } from "../../contexts/AppContextProvider.tsx";
 import Cookies from "js-cookie";
-import { Snackbar } from "./Snackbar.tsx";
+import { Snackbar } from "../Snackbar/Snackbar.tsx";
 
 export const AddTodo = () => {
   const [todoInput, setTodoInput] = useState<string>("");
