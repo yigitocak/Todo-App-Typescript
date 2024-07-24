@@ -42,11 +42,14 @@ export const TodoItem = ({ id, todo, completed }: ListProps) => {
 
   return (
     <li
-      className="border-b-2 p-2 flex items-center justify-between"
+      className="border-b-2 p-2 flex items-center justify-between overflow-hidden"
       onClick={handleClick}
     >
       <p
-        className={`${!done ? "" : "line-through text-[#ccc]"} cursor-pointer`}
+        className={`${
+          !done ? "" : "line-through text-[#ccc]"
+        } cursor-pointer break-words`}
+        style={{ wordBreak: "break-word", overflowWrap: "break-word" }}
       >
         {todo}
       </p>

@@ -34,6 +34,7 @@ export const Sidebar = () => {
     setTodoList([]);
     setTodoCount(0);
   };
+
   const handleDelete = async () => {
     try {
       await axios.delete(`${BASE_URL}delete`, {
@@ -65,7 +66,7 @@ export const Sidebar = () => {
   };
 
   return (
-    <section className="max-sm:flex-[0.60] flex-[0.5] lg:flex-[0.3] border-l-2 flex flex-col bg-[#f0f5fa] rounded-br-[8px]">
+    <section className="max-sm:flex-[0.60] flex-[0.5] lg:flex-[0.3] border-l-2 flex flex-col bg-[#f0f5fa] rounded-br-[8px] overflow-hidden">
       <AddTodo />
       {loggedIn ? (
         <>

@@ -15,7 +15,7 @@ export const TodoList = () => {
   return (
     <>
       {loggedIn ? (
-        <ul className="max-sm:flex-1 flex-1">
+        <ul className="max-sm:flex-1 flex-1 overflow-auto p-2">
           {sortedTodoList.map((item: TodoItemType) => (
             <TodoItem
               todo={item.todo}
