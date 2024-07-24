@@ -16,11 +16,17 @@ export const AddTodo = () => {
     setSnackbarOpen,
     snackbarMessage,
     snackbarOpen,
+    loggedIn,
   } = useAppContext();
   const token = Cookies.get("authToken");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!loggedIn) {
+      setSnackbarMessage("You must login to add a todo!");
+      return setSnackbarOpen(true);
+    }
 
     if (todoInput === "" || todoInput.trim() === "") return;
     const todoId = crypto.randomUUID();
@@ -50,7 +56,7 @@ export const AddTodo = () => {
       setTodoInput("");
     } catch (e) {
       setSnackbarMessage("Error when adding todo!");
-      setSnackbarOpen(true);
+      return setSnackbarOpen(true);
     }
   };
 
