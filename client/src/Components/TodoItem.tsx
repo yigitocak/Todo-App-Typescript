@@ -12,7 +12,7 @@ type ListProps = {
 };
 
 export const TodoItem = ({ id, todo, completed }: ListProps) => {
-  const { userEmail, getTodos } = useAppContext();
+  const { userEmail, setTodoList, todoList } = useAppContext();
   const [done, setDone] = useState(completed);
   const token = Cookies.get("authToken");
 
@@ -24,7 +24,6 @@ export const TodoItem = ({ id, todo, completed }: ListProps) => {
         { headers: { Authorization: `Bearer ${token}` } },
       );
       setDone(!done);
-      getTodos();
     } catch (e) {}
   };
 
@@ -35,17 +34,22 @@ export const TodoItem = ({ id, todo, completed }: ListProps) => {
       await axios.delete(`${BASE_URL}todo/${userEmail}/delete/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      getTodos();
+
+      const newList = todoList.filter((todo) => todo.id !== id);
+      setTodoList(newList);
     } catch (e) {}
   };
 
   return (
     <li
-      className="border-b-2 p-2 flex items-center justify-between"
+      className="border-b-2 p-2 flex items-center justify-between overflow-hidden"
       onClick={handleClick}
     >
       <p
-        className={`${!done ? "" : "line-through text-[#ccc]"} cursor-pointer`}
+        className={`${
+          !done ? "" : "line-through text-[#ccc]"
+        } cursor-pointer break-words`}
+        style={{ wordBreak: "break-word", overflowWrap: "break-word" }}
       >
         {todo}
       </p>
