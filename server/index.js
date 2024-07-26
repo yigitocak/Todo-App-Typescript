@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
+import path from "path";
 import todo from "./routes/todo.js";
 import register from "./routes/register.js";
 import login from "./routes/login.js";
@@ -11,7 +12,7 @@ const PORT = process.env.PORT;
 
 app.use(morgan("dev"));
 app.use(cors());
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "/client/dist")));
 
 app.use("/todo", todo);
 app.use("/delete", del);
