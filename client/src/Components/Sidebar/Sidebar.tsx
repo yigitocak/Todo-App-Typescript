@@ -1,13 +1,13 @@
-import { AddTodo } from "./AddTodo";
-import { Login } from "./Login";
-import { useAppContext } from "../contexts/AppContextProvider";
-import { Button } from "./Button.tsx";
+import { AddTodo } from "../AddTodo/AddTodo.tsx";
+import { Login } from "../Login/Login.tsx";
+import { useAppContext } from "../../contexts/AppContextProvider.tsx";
+import { Button } from "../Button/Button.tsx";
 import Cookies from "js-cookie";
-import { Modal } from "./Modal.tsx";
+import { Modal } from "../Modal/Modal.tsx";
 import { useState } from "react";
 import axios from "axios";
-import { BASE_URL } from "../utils/utils.ts";
-import { Snackbar } from "./Snackbar.tsx";
+import { BASE_URL } from "../../utils/utils.ts";
+import { Snackbar } from "../Snackbar/Snackbar.tsx";
 
 export const Sidebar = () => {
   const {
