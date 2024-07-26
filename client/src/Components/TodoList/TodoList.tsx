@@ -1,5 +1,5 @@
-import { TodoItem } from "./TodoItem";
-import { useAppContext } from "../contexts/AppContextProvider";
+import { TodoItem } from "../TodoItem/TodoItem.tsx";
+import { useAppContext } from "../../contexts/AppContextProvider.tsx";
 
 type TodoItemType = {
   id: any;

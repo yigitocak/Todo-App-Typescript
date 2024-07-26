@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-import del from "../assets/delete.svg";
-import { BASE_URL } from "../utils/utils";
-import { useAppContext } from "../contexts/AppContextProvider";
+import del from "../../assets/delete.svg";
+import { BASE_URL } from "../../utils/utils.ts";
+import { useAppContext } from "../../contexts/AppContextProvider.tsx";
 
 type ListProps = {
   id: string;
