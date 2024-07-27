@@ -29,7 +29,7 @@ export const AddTodo = () => {
     }
 
     if (todoInput === "" || todoInput.trim() === "") return;
-    const todoId = crypto.randomUUID();
+    const todoId = String(crypto.randomUUID());
     const todoTimestamp = Date.now();
 
     try {

@@ -7,8 +7,8 @@ type AppContextProviderProps = {
 };
 
 type TodoItemType = {
-  timestamp: any;
-  id: number;
+  timestamp: number;
+  id: string;
   todo: string;
   completed: boolean;
 };
