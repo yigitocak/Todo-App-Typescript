@@ -24,7 +24,7 @@ export const AddTodo = () => {
     e.preventDefault();
 
     if (!loggedIn) {
-      setSnackbarMessage("You must login to add a todo!");
+      setSnackbarMessage("You must login to add todos!");
       return setSnackbarOpen(true);
     }
 
